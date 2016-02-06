@@ -3,7 +3,7 @@
 #include <time.h>
 #include <errno.h>
 
-#define N 5
+#define N 500
 #define TYPE double
 
 
@@ -13,7 +13,7 @@ void raise_memory_error()
     exit(EXIT_FAILURE);
 }
 
-TYPE * alloc_array(size_t nmemb)
+TYPE *alloc_array(size_t nmemb)
 {
     TYPE *arr = (TYPE*)malloc(sizeof(TYPE) * nmemb);
     if(arr == NULL)
@@ -85,34 +85,20 @@ void mul_matrix(TYPE **res, TYPE **m1, TYPE **m2, size_t nmemb)
 int main(void)
 {
     srand(time(NULL));
-    // time()
 
     TYPE **a = alloc_matrix(N);
     TYPE **b = alloc_matrix(N);
     TYPE **c = alloc_matrix(N);
 
-
-    // print_matrix(a, N);
-    // puts("");
-    // print_matrix(b, N);
-    // puts("");
-    // print_matrix(c, N);
-    // puts("");
-
     randomize_matrix(a, N);
     randomize_matrix(b, N);
     randomize_matrix(c, N);
-    //
-    // print_matrix(a, N);
-    // puts("");
-    // print_matrix(b, N);
-    // puts("");
-    // print_matrix(c, N);
-    // puts("");
 
+    clock_t start = clock();
     mul_matrix(c, a, b, N);
+    double working_time = (double)(clock() - start) / CLOCKS_PER_SEC;
 
-    print_matrix(c, N);
+    printf("Working time: %f\n", working_time);
 
     free_matrix(a, N);
     free_matrix(b, N);
