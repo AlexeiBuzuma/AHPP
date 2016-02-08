@@ -98,7 +98,7 @@ int main(void)
     mul_matrix(c, a, b, N);
     double working_time = (double)(clock() - start) / CLOCKS_PER_SEC;
 
-    printf("Working time: %f\n", working_time);
+    printf("Working time: %g s\n", working_time);
 
     free_matrix(a, N);
     free_matrix(b, N);
