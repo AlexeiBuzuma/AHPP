@@ -3,7 +3,7 @@
 #include <time.h>
 #include <errno.h>
 
-#define N 500
+#define N 1000
 #define TYPE double
 
 
