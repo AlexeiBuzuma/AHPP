@@ -1,6 +1,6 @@
 CC=gcc
-CFLAGS=-std=gnu11 -Wall
-VECT_FLAGS=-O2 -ftree-vectorize -mavx -ftree-vectorizer-verbose=5
+CFLAGS=
+VECT_FLAGS=-O3 -ftree-vectorizer-verbose=5 -funsafe-math-optimizations 
 SOURCES=main.c
 EXECUTABLE_NOVECT=novect
 EXECUTABLE_VECT=vect
@@ -10,10 +10,10 @@ ASM_VECT=vect.s
 all: $(SOURCES) $(EXECUTABLE_NOVECT) $(EXECUTABLE_VECT) $(ASM_NOVECT) $(ASM_VECT)
 
 $(ASM_NOVECT): $(SOURCES)
-	$(CC) $(SOURCES) $(CFLAGS) -S -o $@
+	$(CC) -O2 $(SOURCES) $(CFLAGS) -S -o $@
 
 $(EXECUTABLE_NOVECT): $(SOURCES)
-	$(CC) $(SOURCES) $(CFLAGS) -o $@
+	$(CC) -O2 $(SOURCES) $(CFLAGS) -o $@
 
 $(ASM_VECT): $(SOURCES)
 		$(CC) $(SOURCES) $(VECT_FLAGS) $(CFLAGS) -S -o $@
