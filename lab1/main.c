@@ -15,7 +15,7 @@ void raise_memory_error()
 
 TYPE *alloc_array(size_t nmemb)
 {
-    TYPE *arr = (TYPE*)malloc(sizeof(TYPE) * nmemb);
+    TYPE *arr = (TYPE*)calloc(nmemb, sizeof(TYPE));
     if(arr == NULL)
         raise_memory_error();
 
@@ -92,16 +92,10 @@ int main(void)
 
     randomize_matrix(a, N);
     randomize_matrix(b, N);
-    // puts("A:");
-    // print_matrix(a, N);
-    // puts("B:");
-    // print_matrix(b, N);
 
     clock_t start = clock();
     mul_matrix(c, a, b, N);
     double working_time = (double)(clock() - start) / CLOCKS_PER_SEC;
-    // puts("C:");
-    // print_matrix(c, N);
     printf("Working time: %g s\n", working_time);
 
     free_matrix(a, N);
