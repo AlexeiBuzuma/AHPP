@@ -1,6 +1,7 @@
 CC=gcc
-CFLAGS=
-VECT_FLAGS=-O3 -ftree-vectorizer-verbose=5 -funsafe-math-optimizations 
+CFLAGS=-Wall
+NOVECT_CFLAGS= $(CFLAGS) -O2
+VECT_FLAGS= $(CFLAGS) -O3 -msse4 -ftree-vectorizer-verbose=5 -funsafe-math-optimizations
 SOURCES=main.c
 EXECUTABLE_NOVECT=novect
 EXECUTABLE_VECT=vect
@@ -10,16 +11,16 @@ ASM_VECT=vect.s
 all: $(SOURCES) $(EXECUTABLE_NOVECT) $(EXECUTABLE_VECT) $(ASM_NOVECT) $(ASM_VECT)
 
 $(ASM_NOVECT): $(SOURCES)
-	$(CC) -O2 $(SOURCES) $(CFLAGS) -S -o $@
+	$(CC) $(SOURCES) $(NOVECT_CFLAGS) -S -o $@
 
 $(EXECUTABLE_NOVECT): $(SOURCES)
-	$(CC) -O2 $(SOURCES) $(CFLAGS) -o $@
+	$(CC) $(SOURCES) $(NOVECT_CFLAGS) -o $@
 
 $(ASM_VECT): $(SOURCES)
-		$(CC) $(SOURCES) $(VECT_FLAGS) $(CFLAGS) -S -o $@
+		$(CC) $(SOURCES) $(VECT_FLAGS) -S -o $@
 
 $(EXECUTABLE_VECT): $(SOURCES)
-	$(CC) $(SOURCES) $(VECT_FLAGS) $(CFLAGS) -o $@
+	$(CC) $(SOURCES) $(VECT_FLAGS) -o $@
 
 clean: $(SOURCES)
 	rm $(EXECUTABLE_NOVECT) $(EXECUTABLE_VECT) $(ASM_NOVECT) $(ASM_VECT)

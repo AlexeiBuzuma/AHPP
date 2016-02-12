@@ -3,7 +3,7 @@
 #include <time.h>
 #include <errno.h>
 
-#define N 1000
+#define N 1500
 #define TYPE double
 
 
@@ -77,8 +77,8 @@ void print_matrix(TYPE **matrix, size_t nmemb)
 void mul_matrix(TYPE **res, TYPE **m1, TYPE **m2, size_t nmemb)
 {
     for(int i = 0; i < nmemb; i++)
-        for(int j = 0; j < nmemb; j++)
-            for(int k = 0; k < nmemb; k++)
+        for(int k = 0; k < nmemb; k++)
+            for(int j = 0; j < nmemb; j++)
                 res[i][j] += m1[i][k] * m2[k][j];
 }
 
@@ -92,12 +92,16 @@ int main(void)
 
     randomize_matrix(a, N);
     randomize_matrix(b, N);
-    randomize_matrix(c, N);
+    // puts("A:");
+    // print_matrix(a, N);
+    // puts("B:");
+    // print_matrix(b, N);
 
     clock_t start = clock();
     mul_matrix(c, a, b, N);
     double working_time = (double)(clock() - start) / CLOCKS_PER_SEC;
-
+    // puts("C:");
+    // print_matrix(c, N);
     printf("Working time: %g s\n", working_time);
 
     free_matrix(a, N);
