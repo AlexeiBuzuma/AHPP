@@ -1,9 +1,16 @@
 #!/usr/bin/env shellpy
-N = 1000
+N = 2000
+print(`make remake`)
 `./main {N} > main.txt`
 `./main_intr {N} > main_intr.txt`
 `./main_intr_openmp {N} > main_intr_openmp.txt`
 `./main_openmp {N} > main_openmp.txt`
+print()
+print('diff main.txt main_openmp.txt')
 print(`diff main.txt main_openmp.txt`)
+print()
+print('diff main.txt main_intr.txt')
 print(`diff main.txt main_intr.txt`)
+print()
+print('diff main.txt main_intr_openmp.txt')
 print(`diff main.txt main_intr_openmp.txt`)
