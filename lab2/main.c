@@ -9,27 +9,32 @@
 #include <emmintrin.h>
 void mul_matrix(TYPE **res, TYPE **m1, TYPE **m2, size_t nmemb)
 {
-  __m128d vect1 = {0, 0};
-  __m128d vect2 = {0, 0};
-  TYPE temp[2] = {0, 0};
-  for(size_t i = 0; i < nmemb/2; i += 2)
-    for(size_t j = 0; j < nmemb/2; j += 2)
-      for(size_t k = 0; k < nmemb; k++)
+  for(size_t i = 0; i < nmemb; i++)
+  {
+    TYPE* res_line = res[i];
+    for(size_t j = 0; j < nmemb; j++)
+    {
+      TYPE m1_value = m1[i][j];
+      TYPE* m2_line = m2[j];
+
+      __m128 v1, v2, v3;
+      v1 = _mm_load1_ps(&m1_value);
+      for(size_t k = sizeof(TYPE); k < nmemb; k += 2*sizeof(TYPE))
       {
-        temp[0] = m1[i][k];
-        temp[1] = m1[i+1][k];
-        vect1 = _mm_load_pd(temp);
-        temp[0] = m2[k][j];
-        temp[1] = m2[k][j+1];
-        vect2 = _mm_load_pd(temp);
-        vect1 = _mm_mul_pd(vect1, vect2);
-        temp[0] = res[i][j];
-        temp[0] = res[i+1][j+1];
-        vect2 = _mm_load_pd(temp);
-        vect1 = _mm_add_pd(vect1, vect2);
-        res[i][j] = vect1[0];
-        res[i+1][j+1] = vect1[1];
+        v2 = _mm_load_ps(res_line + k);
+        v3 = _mm_load_ps(m2_line + k);
+        v3 = _mm_mul_ps(v3, v1);
+        v2 = _mm_add_ps(v2, v3);
+        _mm_store_ps(res_line + k, v2);
+
+        v2 = _mm_load_ps(res_line + k - sizeof(TYPE));
+        v3 = _mm_load_ps(m2_line + k- sizeof(TYPE));
+        v3 = _mm_mul_ps(v3, v1);
+        v2 = _mm_add_ps(v2, v3);
+        _mm_store_ps(res_line + k- sizeof(TYPE), v2);
       }
+    }
+  }
 }
 #endif
 

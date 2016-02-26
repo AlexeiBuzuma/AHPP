@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <err.h>
 #pragma once
-#define TYPE double
+#define TYPE float
 void raise_memory_error();
 TYPE *alloc_array(size_t nmemb);
 char *alloc_string(size_t nmemb);
