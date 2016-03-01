@@ -1,7 +1,7 @@
 CC=gcc
-CFLAGS=-Wall
+CFLAGS=-Wall -std=c99
 NOVECT_CFLAGS= $(CFLAGS) -O2
-VECT_FLAGS= $(CFLAGS) -O3 -msse4 -ftree-vectorizer-verbose=5 -funsafe-math-optimizations
+VECT_FLAGS= $(CFLAGS) -O3 -msse2 -ftree-vectorizer-verbose=5 -funsafe-math-optimizations
 SOURCES=main.c
 EXECUTABLE_NOVECT=novect
 EXECUTABLE_VECT=vect
