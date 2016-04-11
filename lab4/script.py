@@ -86,7 +86,7 @@ def test_matrix(number_of_repetitions=10, size_of_matrix=10000, step=500):
 def density_of_accessing(picture_name):
     
     coordinats = []
-    with open("matrix_processing_result") as file:
+    with open("matrix_processing_result.log") as file:
         for line in file:
             coordinats.append(list(map(int, line.split() )))
 
